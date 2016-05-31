@@ -10,7 +10,7 @@ class MetaCollector:
 
     def __call__(self, *args, **kwargs):
         def register(method):
-            self._items.append(MetaDataItem._make((method, args, kwargs)))
+            self._items.append(MetaDataItem(method, args, kwargs))
             return method
         return register
 
@@ -22,5 +22,5 @@ class MetaCollector:
         for method, args, kwargs in self._items:
             # bind method to instance (descriptors magic)
             method = method.__get__(instance)
-            _items.append(MetaDataItem._make((method, args, kwargs)))
+            _items.append(MetaDataItem(method, args, kwargs))
         return MetaCollector(_items=_items)
